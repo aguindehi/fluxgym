@@ -450,7 +450,7 @@ def gen_sh(
     clip_path = resolve_path("models/clip/clip_l.safetensors")
     t5_path = resolve_path("models/clip/t5xxl_fp16.safetensors")
     ae_path = resolve_path("models/vae/ae.sft")
-    sh = f"""accelerate launch {line_break}
+    sh = f"""nohup accelerate launch {line_break}
   --mixed_precision bf16 {line_break}
   --num_cpu_threads_per_process 1 {line_break}
   sd-scripts/flux_train_network.py {line_break}
@@ -508,6 +508,8 @@ def gen_sh(
     if len(advanced_flags) > 0:
         advanced_flags_str = f" {line_break}\n  ".join(advanced_flags)
         sh = sh + "\n  " + advanced_flags_str
+
+    sh = sh + f" | tee outputs/{output_name}/train.out"
 
     return sh
 
