@@ -509,7 +509,7 @@ def gen_sh(
         advanced_flags_str = f" {line_break}\n  ".join(advanced_flags)
         sh = sh + "\n  " + advanced_flags_str
 
-    sh = sh + f" | tee outputs/{output_name}/train.out"
+    sh = sh + "\n  " + f"| tee outputs/{output_name}/train.out"
 
     return sh
 
